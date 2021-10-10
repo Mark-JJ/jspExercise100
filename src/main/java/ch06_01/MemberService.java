@@ -15,19 +15,5 @@ public class MemberService {
 		return dao.select(id);
 	}
 	
-	public List<MemberBean> select() {
-		return dao.select();
-	}
 	
-	public List<MemberBean> getAllMembers() {
-		return select();
-	}
-
-	public MemberBean insertMember(MemberBean bean) throws SQLException {
-		return dao.insertMember(bean);
-	}
-
-	public int delete(String memberId) {
-		return dao.delete(memberId);
-	}
 }
