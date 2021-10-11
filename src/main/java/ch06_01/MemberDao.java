@@ -28,7 +28,7 @@ public class MemberDao {
 		}
 	}	
 
-	private static final String SELECT_BY_ID = "Select memberId, password from LoginNmber where memberId = ?";
+	private static final String SELECT_BY_ID = "Select memberId, password, name, address, phone, birthday, registerdate, picture, weight from member42 where memberId = ?";
 
 	public MemberBean select(String id) {
 		MemberBean result = null;
@@ -44,6 +44,11 @@ public class MemberDao {
 					result = new MemberBean();
 					result.setMemberId(rset.getString("memberid"));
 					result.setPassword(rset.getString("password"));
+					result.setName(rset.getString("name"));
+					result.setAddress(rset.getString("address"));
+					result.setPhone(rset.getString("phone"));
+					result.setBirthday(rset.getDate("birthday"));
+					result.setWeight(rset.getDouble("weight"));
 				}
 			}
 		} catch (SQLException e) {
@@ -52,5 +57,83 @@ public class MemberDao {
 		return result;
 	}
 	
+	private static final String SELECT_ALL = "Select memberId, password, name, address, phone, birthday,registerdate ,picture ,weight from member42";
 	
+	public List<MemberBean> select() {
+		List<MemberBean> result = null;
+		try(
+			Connection conn = ds.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(SELECT_ALL);
+			ResultSet rset = stmt.executeQuery();				
+		) {
+			result = new Vector<>();
+			while (rset.next()) {
+				MemberBean temp = new MemberBean();
+				temp.setMemberId(rset.getString("memberid"));
+				temp.setPassword(rset.getString("password"));
+				temp.setName(rset.getString("name"));
+				temp.setAddress(rset.getString("address"));
+				temp.setPhone(rset.getString("phone"));
+				temp.setBirthday(rset.getDate("birthday"));
+				temp.setWeight(rset.getDouble("weight"));
+				result.add(temp);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return result;
+	}
+
+	private static final String INSERT = "Insert into member42 (memberId, password, name, address, phone, birthday, registerdate, picture, weight) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+	public MemberBean insertMember(MemberBean bean) throws SQLException {
+		MemberBean result = null;
+		try(
+			Connection conn = ds.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(INSERT);
+		) {
+			stmt.setString(1, bean.getMemberId());
+			stmt.setString(2, bean.getPassword());
+			stmt.setString(3, bean.getName());
+			stmt.setString(4, bean.getAddress());
+			stmt.setString(5, bean.getPhone());
+
+			java.util.Date temp = bean.getBirthday();
+			if (temp != null) {
+				java.sql.Date someTime = new java.sql.Date(temp.getTime());
+				stmt.setDate(6, someTime);
+			} else {
+				stmt.setDate(6, null);
+			}
+
+			Timestamp ts = new Timestamp(System.currentTimeMillis());
+			stmt.setTimestamp(7, ts);
+			Blob b = null;
+			stmt.setBlob(8, b);
+			stmt.setDouble(9, bean.getWeight());
+
+			int i = stmt.executeUpdate();
+			if (i == 1) {
+				result = this.select(bean.getMemberId());
+			}
+
+		} 
+		return result;
+	}
+
+	private static final String DELETE = "Delete from member42 where memberId=?";
+
+	public int delete(String memberId) {
+		int result = 0;
+		try(
+			Connection conn = ds.getConnection();
+			PreparedStatement stmt = conn.prepareStatement(DELETE);
+		) {
+			stmt.setString(1, memberId);
+			result = stmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return result;
+	}
 }

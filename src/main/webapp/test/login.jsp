@@ -16,7 +16,7 @@ form {
 </head>
 <body>
 
-<form Action="login.do" method="POST">
+<form Action="" method="POST">
     <table>
          <tr><th colspan='2'>
             <h1>登入</h1> 
@@ -33,7 +33,7 @@ form {
          <tr>
              <td align="RIGHT">密碼：</td>
              <td align="LEFT" >
-             	<input	type="text" name="pswd" size="10" value="${param.pswd}">
+             	<input	type="password" name="pswd" size="10" value="${param.pswd}">
              </td>
              <td width='120'><small>
              	<font color='red'  size="-1">${ErrorMsgKey.PasswordEmptyError}</font></small>
