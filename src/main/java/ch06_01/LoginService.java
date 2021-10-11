@@ -8,7 +8,11 @@ public class LoginService {
         // MemberBean mb 內。
 		MemberBean mb = dao.select(id);
         // 如果mb不等於 null 而且參數 password等於mb內的password) {
-        if ( mb != null && mb.getPassword().equals(password) ) {
+		System.out.println("id=="+id+" "+password);
+		System.out.println("getPassword=="+mb.getPassword());
+		System.out.println("password is true ="+mb.getPassword().trim().equals(password.trim()));
+        if ( mb != null && mb.getPassword().trim().equals(password.trim()) ) {
+        	System.out.println("mb != null && mb.getPassword().equals(password)");
         	// 傳回 mb物件，同時結束本方法
         	 return mb;
         }

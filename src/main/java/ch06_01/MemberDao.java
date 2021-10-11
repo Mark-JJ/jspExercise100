@@ -28,31 +28,31 @@ public class MemberDao {
 		}
 	}	
 
-	private static final String SELECT_BY_ID = "Select memberId, password, name, address, phone, birthday, registerdate, picture, weight from member42 where memberId = ?";
+	private static final String SELECT_BY_ID = "Select memberId, password from LoginNmber where memberId = ?";
 
 	public MemberBean select(String id) {
 		MemberBean result = null;
 		try(
 			Connection conn = ds.getConnection();
 			PreparedStatement stmt = conn.prepareStatement(SELECT_BY_ID);
+
 		) {
+			System.out.println("1=="+id);
 			stmt.setString(1, id);
 			try (
-				ResultSet rset = stmt.executeQuery();					
+				ResultSet rset = stmt.executeQuery();	
 			){
 				if (rset.next()) {
+					System.out.println("2=="+rset.getString("memberid"));
+					System.out.println("3=="+rset.getString("password"));
 					result = new MemberBean();
 					result.setMemberId(rset.getString("memberid"));
 					result.setPassword(rset.getString("password"));
-					result.setName(rset.getString("name"));
-					result.setAddress(rset.getString("address"));
-					result.setPhone(rset.getString("phone"));
-					result.setBirthday(rset.getDate("birthday"));
-					result.setWeight(rset.getDouble("weight"));
 				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+			System.out.println(e.toString());
 		} 
 		return result;
 	}

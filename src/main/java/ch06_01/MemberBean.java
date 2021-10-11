@@ -32,6 +32,12 @@ public class MemberBean implements Serializable {
 		this.registerDate = registerDate;
 		this.weight = weight;
 	}
+	public MemberBean(String memberId, String password) {
+
+		this.memberId = memberId;
+		this.password = password;
+
+	}
 
 	public java.sql.Timestamp getRegisterDate() {
 		return registerDate;
