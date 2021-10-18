@@ -39,13 +39,9 @@ padding: 30px
 	<a href="<c:url value='/ch06_02/ShowMember20.do' />"><h2>更新商品資料</h2></a><br>
 	<a href="<c:url value='/ch06_02/ShowMember.do' />"><h2>刪除商品資料</h2></a><br>
 	<a href="<c:url value='/ch06_03/ShowMember.do' />"><h2>顯示現有商品資料</h2></a>
-		<a href="<c:url value='/ch06_02/UAndDServlet.do' />"><h2>修改與刪除測試中</h2></a>
-
-	</th>
-
-	
+	<a href="<c:url value='/ch06_02/UAndDServlet.do' />"><h2>修改與刪除(成功)</h2></a>
+	</th>	
 </tr>
-
 </table>
 </body>
 </html>

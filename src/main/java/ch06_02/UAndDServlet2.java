@@ -21,38 +21,43 @@ public class UAndDServlet2 extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// 定義存放錯誤訊息的 Collection物件
 		HttpSession session = request.getSession();
 		Map<String, String> errorMessage = new HashMap<>();
 		request.setAttribute("ErrorMsg", errorMessage);
 
-		// 設定輸入資料的編碼
 		request.setCharacterEncoding("UTF-8");
-		// 讀取使用者所輸入，由瀏覽器送來的 mId 欄位內的資料，注意大小寫
 		String id = request.getParameter("mId");
-		System.out.println("####"+id);
-		// 檢查使用者所輸入的資料
 		if (id == null|| id.trim().length() == 0 ) {
 			errorMessage.put("id", "商品編號必須輸入");
-			RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/DeletMembers.jsp");
+			RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/UpdateAndDelet.jsp");
 			rd.forward(request, response);
 		}else{
 			MemberService ms =new MemberService();
 			ms.delete(id);
-//			JOptionPane.showMessageDialog(null, "資料已刪除", "刪除", 
-//			JOptionPane.INFORMATION_MESSAGE);
-			RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/DeletMembersSuccess.jsp");
+
+			RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/UAndDServlet.do");
 			rd.forward(request, response);
 		}
-
-		
-//		if (!errorMessage.isEmpty()) {
-//			RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/DeletMembers.jsp");
-//			rd.forward(request, response);   
-//			return;
-//		}
-
-
-		//}
 	}
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Map<String, String> errorMessage = new HashMap<>();
+		request.setAttribute("ErrorMsg", errorMessage);
+
+		request.setCharacterEncoding("UTF-8");
+		String id = request.getParameter("mId");
+		if (id == null|| id.trim().length() == 0 ) {
+			errorMessage.put("id", "商品編號必須輸入");
+			RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/UpdateAndDelet.jsp");
+			rd.forward(request, response);
+		}else{
+			MemberService ms =new MemberService();
+			ms.delete(id);
+
+			RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/UAndDServlet.do");
+			rd.forward(request, response);
+		}
+	}
+	
 }

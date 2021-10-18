@@ -33,5 +33,20 @@ public class UAndDServlet extends HttpServlet {
 		return;
 		
 	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//		System.out.println("test");
+		MemberService  memberService = new MemberService();
+		
+		List<MemberBean> members = memberService.findAll();
+//		System.out.println("#############"+members.get(0));//[QQ1,狗狗玩偶,台灣,4710114815556,2020-11-29,249.0]
+		ArrayList<String> mslist = new ArrayList<String>();
+
+	    request.setAttribute("allMembers", members);
+	    
+	    RequestDispatcher rd = request.getRequestDispatcher("/ch06_02/UpdateAndDelet.jsp");
+	    rd.forward(request, response);
+		return;
+		
+	}
 
 }

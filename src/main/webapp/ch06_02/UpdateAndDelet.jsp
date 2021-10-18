@@ -61,7 +61,7 @@ table {
 				</td>
 				<td align="center">
 				<input	name="mId" type="hidden" value="${member.memberId}">
-				<input	type="submit" value="刪除">
+				<input	type="submit" value="刪除" class="de">
 				</td>
 				
 			</tr>
@@ -73,13 +73,22 @@ table {
 		<th><a href="<c:url value='/index.jsp' />">回首頁</a></th>
 	</table>
 </body>
-<script>
-	function CheckForm() {
-		if (confirm("確認刪除嗎？") == true)
-			return true;
-		else
-			return false;
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
 
-	}
+
+	//自動填入資料
+	$(document).ready(function() {
+		$(".de").click(function() {
+			var yes = confirm('你確定嗎？');
+
+			if (yes) {
+			    alert('刪除成功');
+			} else {
+				this.form.action="";
+			    alert('取消刪除');
+			}
+		})
+	});
 </script>
 </html>
